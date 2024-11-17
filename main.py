@@ -483,7 +483,7 @@ class MainMenu():
         new_folder_move.process_file_move()
 
 class MoveFilesCommand():
-    '''This class will move the files based on the user-defined extensions list.  '''
+    '''This class will mooove the files based on the user-defined extensions list.  '''
     def __init__(self, dir_a, dir_b):
         self.directory_from = None
         self.directory_to = None
