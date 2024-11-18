@@ -1,11 +1,20 @@
 ![alt text](https://i.imgur.com/z1ogxT9.png)
-
-# Version 0.3.5.1
+### Python File Mover: The Ultimate Solution to Avoiding File Management
+### Version 0.3.5.1
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-This program provides a simple way to move massive amounts of files from one directory to another directory without having to manually go into your directories and move each file one by one. With PythonFileMover all you have to do is open up your command line and run our simple commands to move your files around on your computer with ease.  You can move massive amounts of files
 
-Move massive amounts of files, either by extension(i.e. .txt ) or folder(i.e. WorkFiles) from one directory(I.E. C:/) to another directory (I.E. D:/) with only a few lines. Save yourself time from having to constantly copy and paste the files and get back to doing more important things!
+Ever open your downloads folder—or any other folder on your computer—and immediately feel your soul start to shrivel at the thought of sorting through it? Well, now you don’t have to!
+
+**Introducing Python File Mover** — the app that solves the **grueling** task of choosing which files to delete. Because let’s face it, we’ve all spent way too many hours pretending to care about files like:
+
+- **IMG_432.jpg**
+- **Document_4_final_draft_FINAL_v2.pdf**
+
+With *Python File Mover*, you can just… **not**. It does all the heavy lifting for you, so you can go back to the important work of binge-watching Netflix without the burden of an organized file system.
+
+> **It’s the automation we never knew we needed, but absolutely deserve.**
+
 
 
 
@@ -14,11 +23,18 @@ Move massive amounts of files, either by extension(i.e. .txt ) or folder(i.e. Wo
 - Move entire folders from Directory A to Directory B.
 
 # How to Download
+
 ***Note: Currently Python File Mover is only compatible on Windows devices***
 Requirements: You will need to have GIT and PIP installed on your computer for our installation guide.
-- Step 1: Clone the latest codebase from your github fork. | Git tutorial: https://rogerdudler.github.io/git-guide/ ✨
+- Step 1: Clone the latest codebase from your github fork. Please clone from the 'main' branch for our stable versions. | Git tutorial: https://rogerdudler.github.io/git-guide/ ✨
 - Step 2: Install the dependencies using `pip install -r requirements.txt` | PIP tutorial: https://www.w3schools.com/python/python_pip.asp✨
 - Step 3: Run `python main.py` in the project directory and the project is now ready for use. ✨
+
+
+Development Build(Branch: LatestBuild) :
+LatestBuild is our development branch and considered unstable as many features and refactoring are in progress. However, if you wish to contribute, we recommend the LatestBuild branch since your pull requests will need to be sent to LatestBuild prior to our main branch releases that are found in our changelog and considered stable.
+
+
 
 # Tutorial
  You will then be led to our very intuitive interactive mode! From the interactive mode, you can do the following
@@ -26,18 +42,19 @@ Requirements: You will need to have GIT and PIP installed on your computer for o
 - ✨ Move large amounts of files from Directory A to Directory B: `--move-folders`
 
 
-# Usage Example
-Our program is built to be simple and straight to the point. We designed an interactive mode that walks you through the entire process as soon as you type `python main.py`.
+Our program is designed to be straightforward—because who really wants to deal with complicated software? The moment you type python main.py, our interactive mode kicks in, guiding you through the entire process step-by-step. No need to think or waste time reading documentation—just follow the prompts and you’ll be moving files in seconds.
 
-**Sort and move files by extension**
-By running the `--move-files` command you will be able to move all files within your Windows Directory from one directory to another directory. We open up a GUI dashboard that lets you select the directories so you do not have to worry about having to remember where the directories are at on your computer.
+Want to sort and move files by extension? Just run the --move-files command, and voilà, we’ll take care of transferring your files from one directory to another. Plus, with our handy GUI dashboard, you don’t have to memorize the paths to your directories. Just select them from a list and let the program handle the rest. No more guessing if “C:\Users\You\Documents\Folder_123” is where your files are. It’s all right there, just a click away.
 
-**Move folders from one directory to another directory**
-By running the `--move-folders` command you will be able to more entire folders(and folders within folders) with just a few clicks of a button.  Just select your two directories with our convenient GUI for selecting directories and type --begin to launch the program.
+Need to move entire folders? Run the --move-folders command, and with just a couple of clicks, you can transfer entire folders—and even folders within folders—without breaking a sweat. Our intuitive GUI makes it easy to select your source and destination directories, and once you’re ready, just type --begin, and let the program do the work for you. It’s like having a personal assistant, but for your files.
 
+# Contribute
+A sincere thank you to all the unexpected contributors to this project. Honestly, when we started this, we figured it would be just a small, quiet corner of the internet, full of us staring at code and wondering if anyone would ever care. But here we are—people actually contributed!
 
-# Contributors
-Thank you to all contributors to this project. It is with your time and effort that makes open source software great and heartwarming experience.
+It doesn’t matter if you’re the brave soul who fixed a single typo in our README or the hero who submitted code that made the program actually work (we didn’t think anyone would bother). Every little change, no matter how small, has made this project what it is today. That’s the beauty of open-source: apparently, people care more about making things better than we thought possible.
+
+So, once again, thank you to everyone who made the miracle of this project a reality. Without your contributions, we'd still be stuck with that one feature that barely worked. Seriously, you’re the reason this exists at all.
+
 <div align="center">
   <table style="border: none;">
     <tr>
@@ -65,6 +82,14 @@ Thank you to all contributors to this project. It is with your time and effort t
       </td>
   </table>
 </div>
+
+## How to contribute? 
+If you’re feeling ambitious and want to contribute to our project, first take a look at the open issues. As the maintainer (yes, that’s me), I’m always on the lookout for bugs to squash—because, let’s face it, without bugs, what would I even do with my time? I’ll tag those bugs for your convenience, so you don’t have to go hunting for them like a digital detective.
+
+Got a brilliant idea for a new feature or improvement? Fantastic! But before you dive headfirst into coding it, please open an issue first. Why? Well, I like to review and approve ideas before they turn into pull requests—because, as you can imagine, there’s nothing quite as disappointing as receiving a pull request that I’m just not ready to accept. You know, like showing up to a party and realizing it's the wrong one. By opening an issue first, you save us both from the potential heartbreak of rejection.
+
+So, in short: open an issue, wait for the stamp of approval, and then—maybe—submit that pull request. It’ll make us both feel better.
+
 
 
 
