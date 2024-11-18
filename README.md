@@ -1,6 +1,6 @@
 ![alt text](https://i.imgur.com/z1ogxT9.png)
 ### Python File Mover: The Ultimate Solution to Avoiding File Management
-### Version 0.3.5.1
+### Version 0.4.0.0
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 
