@@ -84,11 +84,7 @@ So, once again, thank you to everyone who made the miracle of this project a rea
 </div>
 
 ## How to contribute? 
-If you’re feeling ambitious and want to contribute to our project, first take a look at the open issues. As the maintainer (yes, that’s me), I’m always on the lookout for bugs to squash—because, let’s face it, without bugs, what would I even do with my time? I’ll tag those bugs for your convenience, so you don’t have to go hunting for them like a digital detective.
-
-Got a brilliant idea for a new feature or improvement? Fantastic! But before you dive headfirst into coding it, please open an issue first. Why? Well, I like to review and approve ideas before they turn into pull requests—because, as you can imagine, there’s nothing quite as disappointing as receiving a pull request that I’m just not ready to accept. You know, like showing up to a party and realizing it's the wrong one. By opening an issue first, you save us both from the potential heartbreak of rejection.
-
-So, in short: open an issue, wait for the stamp of approval, and then—maybe—submit that pull request. It’ll make us both feel better.
+Unfortunately, I have moved on from this project as the maintainer and archieved the project on November 23rd 2024. However, the codebase lives on in the public domain and may be forked and actively worked on and you can design it or improve it however you wish in your own fork.
 
 
 
