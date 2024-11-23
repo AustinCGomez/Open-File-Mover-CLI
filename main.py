@@ -33,7 +33,7 @@ import send2trash
 LOGO = text2art("Python File Mover")
 GOODBYE = text2art("GOODBYE")
 CONTRIBUTE = ("Want additional features? Spotted a bug? Head to our Github and lend a helping hand :) ->  https://github.com/AustinCGomez/Python-File-Mover-CLI")
-VERSION = "Version 0.4.0."
+VERSION = "Version 0.4.0.0-Discontinued"
 LICENSE = "Project published under the Unlicense License and dedicated to the public domain."
 
 
