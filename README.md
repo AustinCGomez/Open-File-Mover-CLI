@@ -84,7 +84,7 @@ So, once again, thank you to everyone who made the miracle of this project a rea
 </div>
 
 ## How to contribute? 
-Unfortunately, the project maintainer, @AustinCGomez, has decided to move on from this project as the maintainer and archieved the project on November 23rd 2024. However, the codebase lives on in the public domain via the unlicense license and may be forked and actively worked on. However, we just will no longer be accepting any new changes to this specific branch at this time since the maintainer has moved away from the project for the time being.
+Unfortunately, the project maintainer, @AustinCGomez, has decided to step down and has archived the project on November 23rd, 2024. However, the codebase remains available in the public domain under the Unlicense, and others are free to fork and contribute to it. Please note that no new changes will be accepted to this specific branch at this time, as the maintainer has moved on from the project.
 
 
 
