@@ -133,7 +133,6 @@ class Controller():
         ViewChoices = Views(self.dir_a, self.dir_b)
         # 1 = flag for ending program view.
         if decision == 1:
-            print("Bro what")
             ViewChoices.end_program_view()
         # 2 = flag for retreiving the directories view.
         elif decision == 2:
@@ -156,10 +155,13 @@ class Controller():
     def model_instances(self, decision):
 
         ModelChoices = Model(self.dir_a, self.dir_b, self.ExtList)
+        #1 = flag for moving the files to trash through Move2Trash
         if decision == 1:
             ModelChoices.move_2trash_command()
+        #2 = flag for moving files to another destination.
         elif decision == 2:
             ModelChoices.move_files_command()
+        #3 = flag for moving folders to another destination.
         elif decision == 3:
             ModelChoices.move_folders_command()
 
@@ -241,7 +243,7 @@ class Model():
         elif decision == 2: 
             InstanceView.move_files_output(fileName, self.dir_a, self.dir_b)
         elif decision ==3:
-            InstanceView.move_folders_output(fileName, self.dir_a, self.dir_b)
+            InstanceView.move_folders_output(self.dir_a, self.dir_b)
 
 
     
@@ -297,7 +299,6 @@ class Model():
     def move_folders_command(self):
         try:
             shutil.move(self.dir_a, self.dir_b)
-            self.call_foldermove_method()
         except NameError:
             self.controller_instances(3)
                 
@@ -305,8 +306,7 @@ class Model():
         try:
             send2trash.send2trash(self.dir_a)
         except:
-            BackToMenu = Controller(self.dir_a, self.dir_b, self.ExtList)
-            BackToMenu.relay_error_message()
+            self.controller_instances(3)
 
 if __name__ == "__main__":
     dir_a = None
