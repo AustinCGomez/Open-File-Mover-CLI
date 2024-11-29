@@ -3,7 +3,7 @@
 ### Version 0.4.0.0-Discontinued
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-#### Note: Python File Mover has been arhicved and active production by the maintainer has concluded at this time. A cross-platform(Unix and Windows) spin-off program named 'CleanUpMyDownloads' will pick off where Python File Mover left off at but with a much more improved architecture. Please check it out at https://github.com/AustinCGomez/CleanUpMyDownloads
+#### Note: Python File Mover has been archived and active production by the maintainer has concluded at this time. This program will forever be left open to the public and in the public domain! However, the maintainer has moved on to a new cross-platform(Unix and Windows) spin-off program named 'CleanUpMyDownloads' that intends to pick off where Python File Mover left off at, but it will include much more improved architecture and codebase. Please check it out at https://github.com/AustinCGomez/CleanUpMyDownloads if you are interested.
 
 # Features
 - Move files from Directory A to Directory B with only a few commands.
@@ -30,6 +30,9 @@ Want to sort and move files by extension? Just run the --move-files command, and
 Need to move entire folders? Run the --move-folders command, and with just a couple of clicks, you can transfer entire folders—and even folders within folders—without breaking a sweat. Our intuitive GUI makes it easy to select your source and destination directories, and once you’re ready, just type --begin, and let the program do the work for you. It’s like having a personal assistant, but for your files.
 
 # Contributors
+"We want to thank every contributor who assisted this program."
+@AustinCGomez
+Maintainer of Python-File-Mover.
 
 <div align="center">
   <table style="border: none;">
