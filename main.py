@@ -1,316 +1,245 @@
-'''
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.'''
-
+"""
+Simple File Mover CLI
+A clean, functional approach to moving files and folders.
+"""
 
 import os
-import sys
 import shutil
-import typer
-import time
+import sys
+from pathlib import Path
 from tkinter import filedialog
-from tkinter import *
-import click
-from art import *
-import send2trash
-
-''' Static functions that give some information about our program'''
-LOGO = text2art("Python File Mover")
-GOODBYE = text2art("GOODBYE")
-CONTRIBUTE = ("Want additional features? Spotted a bug? Head to our Github and lend a helping hand :) ->  https://github.com/AustinCGomez/Python-File-Mover-CLI")
-VERSION = "Version 0.4.0.0-Discontinued"
-LICENSE = "Project published under the Unlicense License and dedicated to the public domain."
+import tkinter as tk
 
 
+def show_banner():
+    """Display program banner"""
+    print("=" * 60)
+    print("         PYTHON FILE MOVER CLI")
+    print("         Version 1.0.0")
+    print("=" * 60)
+    print()
 
 
-''' The purpose of our view class is retrieve the input and output data that the user is requesting and then to be able to send it to our controller class for further analyzies'''
-class Views():
-    def __init__(self, directory_from, directory_to):
-        self.directory_from = directory_from
-        self.directory_to = directory_to
-        self.extension_list = []
+def get_directory(prompt_text):
+    """Get directory path using file dialog"""
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    
+    print(f"{prompt_text}")
+    print("Opening file dialog...")
+    
+    directory = filedialog.askdirectory(title=prompt_text)
+    root.destroy()
+    
+    if not directory:
+        print("No directory selected. Exiting...")
+        sys.exit(1)
+    
+    print(f"Selected: {directory}")
+    return directory
 
 
-    def retrieve_directories_view(self):
-        print("A small window will open on your screen in the next few seconds which will allow you to pick your source directory.")
-        self.directory_from = filedialog.askdirectory()
-        print("A small window will open on your screen in the next few seconds which will allow you to pick your destination directory.")
-        self.directory_to = filedialog.askdirectory()
-        print("Source Directory:", self.directory_from)
-        print("Destination Directory:", self.directory_to)
-        click.echo("Are the chosen directories correct?")
-        action = click.prompt(
-        "-y - Yes, directories are correct.\n"
-        "-n - No, directories are not correct",
-        type = click.Choice(['-y', '-n'])
-        )
+def get_extensions():
+    """Get file extensions from user input"""
+    extensions = []
+    print("\nEnter file extensions to move (without dots, e.g., 'txt', 'pdf'):")
+    print("Type 'done' when finished.")
+    
+    while True:
+        ext = input("Extension: ").strip().lower()
+        if ext == 'done':
+            break
+        if ext and ext not in extensions:
+            extensions.append(ext)
+            print(f"Added: .{ext}")
+        elif ext in extensions:
+            print(f".{ext} already added")
+    
+    return extensions
 
-        if action == "-y".lower():
-            print("Initializing...")
-        elif action == "-n":
-            print("We are going to reverify the direcotires as the next step.")
-        return self.directory_from, self.directory_to
 
-    def retrieve_just_one_directory_view(self):
-        print("A small window will open on your screen in the next few seconds which will allow you to pick your source directory.")
-        time.sleep(2)
-        self.directory_from = filedialog.askdirectory()
-        print("Chosen Directory: ", self.directory_from)
-        click.echo("Is the chosen directory correct?")
-        action = click.prompt(
-        "-y - Yes, directories are correct.\n"
-        "-n - No, directories are not correct",
-        type = click.Choice(['-y', '-n'])
-        )
-        if action == "-y".lower():
-            print("Vertification complete...")
-            time.sleep(1)
-            print("Initializing...")
-            time.sleep(1)
-        elif action == "-n":
-            print("We are going to reverify the direcotires as the next step.")
+def confirm_action(message):
+    """Get user confirmation"""
+    while True:
+        response = input(f"{message} (y/n): ").strip().lower()
+        if response in ['y', 'yes']:
+            return True
+        elif response in ['n', 'no']:
+            return False
+        print("Please enter 'y' or 'n'")
+
+
+def move_files_by_extension(source_dir, dest_dir, extensions):
+    """Move files with specified extensions from source to destination"""
+    source_path = Path(source_dir)
+    dest_path = Path(dest_dir)
+    
+    if not source_path.exists():
+        print(f"Error: Source directory '{source_dir}' does not exist")
+        return False
+    
+    if not dest_path.exists():
+        print(f"Error: Destination directory '{dest_dir}' does not exist")
+        return False
+    
+    moved_count = 0
+    
+    print(f"\nSearching for files with extensions: {', '.join(f'.{ext}' for ext in extensions)}")
+    
+    for file_path in source_path.iterdir():
+        if file_path.is_file():
+            file_ext = file_path.suffix.lstrip('.').lower()
+            if file_ext in extensions:
+                try:
+                    dest_file = dest_path / file_path.name
+                    shutil.move(str(file_path), str(dest_file))
+                    print(f"Moved: {file_path.name}")
+                    moved_count += 1
+                except Exception as e:
+                    print(f"Error moving {file_path.name}: {e}")
+    
+    print(f"\nCompleted! Moved {moved_count} files.")
+    return True
+
+
+def move_folder(source_dir, dest_dir):
+    """Move entire folder from source to destination"""
+    source_path = Path(source_dir)
+    dest_path = Path(dest_dir)
+    
+    if not source_path.exists():
+        print(f"Error: Source directory '{source_dir}' does not exist")
+        return False
+    
+    if not dest_path.exists():
+        print(f"Error: Destination directory '{dest_dir}' does not exist")
+        return False
+    
+    folder_name = source_path.name
+    final_dest = dest_path / folder_name
+    
+    try:
+        shutil.move(str(source_path), str(final_dest))
+        print(f"Successfully moved folder '{folder_name}' to '{dest_dir}'")
+        return True
+    except Exception as e:
+        print(f"Error moving folder: {e}")
+        return False
+
+
+def delete_permanently(path):
+    """Permanently delete file or folder"""
+    if not os.path.exists(path):
+        print(f"Error: Path '{path}' does not exist")
+        return False
+    
+    try:
+        if os.path.isfile(path):
+            os.remove(path)
+            print(f"Successfully deleted file: {os.path.basename(path)}")
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
+            print(f"Successfully deleted folder: {os.path.basename(path)}")
+        return True
+    except Exception as e:
+        print(f"Error deleting: {e}")
+        return False
+
+
+def main_menu():
+    """Display main menu and handle user choice"""
+    while True:
+        print("\n" + "=" * 50)
+        print("MAIN MENU")
+        print("=" * 50)
+        print("1. Move files by extension")
+        print("2. Move entire folder")
+        print("3. Delete permanently")
+        print("4. Exit")
+        print("=" * 50)
         
-        return self.directory_from
-
-  
-    def retrieve_extensions_view(self, extension_list):
-        while True: 
-            self.getInput = input("Please enter each file extension that you wish to move files from and when you are done please type 'complete'. ")
-            
-            if self.getInput == 'complete'.lower():
-                break
-            self.extension_list.append(self.getInput)
-
-        return self.extension_list
-
-    def start_program_view(self):
-        print(LOGO)
-        print(VERSION)
-        print(LICENSE)
-
-    def end_program_view(self):
-        print("-" * 130)
-        print(GOODBYE)
-        print(CONTRIBUTE)
-        print(LICENSE)
-        print("-" * 130)
-        sys.exit()
-
-    def move_files_output(self, fileName, dir_a, dir_b):
-        output_padding = " " * (len("Name") - len("Extension"))
-        print(" ")
-        print(f"Name: {fileName}{output_padding} - Removed From: {dir_a} and moved to: {dir_b}")
-        print(" ")
-
-    def move_folders_output(self, dir_a, dir_b):
-        print(f"SUCCESS: The Folder has been moved from {dir_a} to {dir_b}")
-
-''' The purpose of our controller class is to handle the logic that is sent from our view and then process what needs to be sent to the model to run specific programs.'''
-class Controller():
-    def __init__(self, dir_a, dir_b, ExtList):
-        self.dir_a = dir_a
-        self.dir_b = dir_b
-        self.ExtList = ExtList
-
-    def view_instances(self, decision):
-
-        ViewChoices = Views(self.dir_a, self.dir_b)
-        # 1 = flag for ending program view.
-        if decision == 1:
-            ViewChoices.end_program_view()
-        # 2 = flag for retreiving the directories view.
-        elif decision == 2:
-            self.directory_value_a = None
-            self.directory_value_b = None
-            dir_a, dir_b = ViewChoices.retrieve_directories_view()
-            self.directory_value_a = dir_a
-            self.directory_value_b = dir_b
-            return self.directory_value_a, self.directory_value_b
-        # 3 = flag for retreve_extensions_view
-        elif decision == 3:
-            self.mylist = []
-            mylist = ViewChoices.retrieve_extensions_view(self.mylist)
-            self.mylist = mylist
-        elif decision == 4:
-            ViewChoices.retrieve_just_one_directory_view()
-            
-
-            
-    def model_instances(self, decision):
-
-        ModelChoices = Model(self.dir_a, self.dir_b, self.ExtList)
-        #1 = flag for moving the files to trash through Move2Trash
-        if decision == 1:
-            ModelChoices.move_2trash_command()
-        #2 = flag for moving files to another destination.
-        elif decision == 2:
-            ModelChoices.move_files_command()
-        #3 = flag for moving folders to another destination.
-        elif decision == 3:
-            ModelChoices.move_folders_command()
-
-
-
-    def command_line_options(self):
-        StartView = Views(dir_a, dir_b)
-        StartView.start_program_view()
-        print(" ")
-        click.echo("Please choose an option from below: ")
-        action = click.prompt(
-        "-mfiles - Move files by specific file extension from Directory A to Directory B!\n"
-        "-mfolders - Move Entire Folders from Directory A to Directory B!\n"
-        "-mrecycle - Move file to the recycle bin!\n",
-        "-quit - Exit out of the program\n",
-        type = click.Choice(['-mfiles', '-mfolders', '-mrecycle', '-quit'])
-        )
-
-        if action == "-mfiles".lower():
-            self.move_files_by_extension()
-        elif action == "-mfolders":
-            self.move_folders_1_by_1()
-        elif action == '-mrecycle':
-            self.move_folder_2_trash()
-        elif action == '-quit':
-            self.view_instances(1)
-
-
-    def move_files_by_extension(self):
-        directory_a = None
-        directory_b = None
-        #Retrieve the files by extension.
-        directory_a, directory_b = self.view_instances(2)
+        choice = input("Enter your choice (1-4): ").strip()
         
-        self.dir_a = directory_a  #Updating our instance variable from our view for the source directory.
-        self.dir_b = directory_b  #updating our instance variable from our view for the destination directory.
-        print("dir_a is source", directory_a)
-        print("dir_b is destination", directory_b)
-        self.view_instances(3)
-        self.model_instances(2)
+        if choice == '1':
+            handle_move_files()
+        elif choice == '2':
+            handle_move_folder()
+        elif choice == '3':
+            handle_delete_permanently()
+        elif choice == '4':
+            print("Goodbye!")
+            sys.exit(0)
+        else:
+            print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
-    # Move this to a function in the views eventually.
-    def error_extensions(self):
-        print(f'{self.ExtList} extension not found in directory {self.dir_a}. Please reenter the extension names.\n')
-        print(" ")
 
-    def move_folders_1_by_1(self):
-        directory_a = None
-        directory_b = None
-        directory_a, directory_b = self.view_instances(2)
-        self.dir_a = directory_a  #Updating our instance variable from our view for the source directory.
-        self.dir_b = directory_b  #updating our instance variable from our view for the destination directory.
-        self.model_instances(3)
+def handle_move_files():
+    """Handle moving files by extension"""
+    print("\n--- MOVE FILES BY EXTENSION ---")
     
-    def move_folder_2_trash(self):
-        self.directory_a = None
-        self.directory_b = None
-        self.view_instances(3)
-        self.model_instances(1)
-
-    def relay_error_message(self):
-        print("Fatal error has occured when attempting to move your folder to the trash. Please screenshot this and open a issue on our github.")
-        print(" ")
-        print("Sending you back to the main menu.. sorry about that. :( )")
-        self.command_line_options()
-
-        
-
-class Model():
-    def __init__(self, dir_a, dir_b, ExtList):
-        self.dir_a = dir_a
-        self.dir_b = dir_b
-        self.ExtList = ExtList
+    source = get_directory("Select SOURCE directory (where files are located)")
+    dest = get_directory("Select DESTINATION directory (where to move files)")
     
-    def view_instances(self,decision, fileName):
-        InstanceView = Views(self.dir_a, self.dir_b)
-        if decision == 1:
-            InstanceView.move_files_output(self.dir_a, self.dir_b)
-        elif decision == 2: 
-            InstanceView.move_files_output(fileName, self.dir_a, self.dir_b)
-        elif decision ==3:
-            InstanceView.move_folders_output(self.dir_a, self.dir_b)
-
-
+    print(f"\nSource: {source}")
+    print(f"Destination: {dest}")
     
-
-    def controller_instances(self, decision):
-        command_line_options = Controller(self.dir_a, self.dir_b, self.ExtList)
-        if decision == 1:
-            command_line_options.command_line_options()
-        elif decision == 2: 
-            command_line_options.relay_error_message()
-        elif decision == 3:
-            command_line_options.relay_error_message()
-        elif decision == 4:
-            command_line_options.error_extensions()
-
+    if not confirm_action("Are these directories correct?"):
+        return
     
+    extensions = get_extensions()
+    if not extensions:
+        print("No extensions specified. Returning to main menu.")
+        return
     
-    def call_foldermove_method(self):
-        MovedFolder = Views(self.dir_a, self.dir_b)
-        MovedFolder.move_folders_output(self.dir_a, self.dir_b)
+    print(f"\nWill move files with extensions: {', '.join(f'.{ext}' for ext in extensions)}")
+    print(f"From: {source}")
+    print(f"To: {dest}")
     
-    def filemoving_methods(self, decision, file):
-        #1 = We will instance View class for the move_files_output function.
-        FileMethods = Views(self.dir_a, self.dir_b)
-        if decision == 1:
-            # We are sending the FileName, Directory 1, and Directory 2 to the View.
-            FileMethods.move_files_output(FileName, dir_a, dir_b)
+    if confirm_action("Proceed with moving files?"):
+        move_files_by_extension(source, dest, extensions)
 
 
+def handle_move_folder():
+    """Handle moving entire folder"""
+    print("\n--- MOVE ENTIRE FOLDER ---")
+    
+    source = get_directory("Select FOLDER to move")
+    dest = get_directory("Select DESTINATION directory")
+    
+    print(f"\nFolder to move: {source}")
+    print(f"Destination: {dest}")
+    
+    if confirm_action("Move this folder?"):
+        move_folder(source, dest)
 
-    def move_files_command(self):
-        try:
-            output_padding = " " * (len("Name") - len("Extension"))
-            normalized_extensions = [ext.lower() for ext in self.ExtList]
-            from_file_ext = [os.path.splitext(file)[-1].lstrip('.').lower() for file in os.listdir(self.dir_a)]
-            for ext in normalized_extensions:
-                if ext not in from_file_ext:
-                    time.sleep(2)
-                    #Displaying error message for the instance.
-                    self.controller_instances(4)
-                    break
-            for file in os.listdir(self.dir_a):
-                if any(file.lower().endswith(ext) for ext in normalized_extensions):
-                    src_path = os.path.join(self.dir_a, file)
-                    dest_path = os.path.join(self.dir_b, file)
-                    shutil.move(src_path, dest_path)
-                self.view_instances(2,file)
-        except NameError:
-            self.controller_instances(2)
 
-         
+def handle_delete_permanently():
+    """Handle permanently deleting items"""
+    print("\n--- DELETE PERMANENTLY ---")
+    print("WARNING: This will permanently delete files/folders!")
+    
+    path = get_directory("Select file or folder to delete permanently")
+    
+    print(f"\nWill permanently delete: {path}")
+    print("This action cannot be undone!")
+    
+    if confirm_action("Are you absolutely sure you want to delete this?"):
+        if confirm_action("Final confirmation - DELETE PERMANENTLY?"):
+            delete_permanently(path)
 
-    def move_folders_command(self):
-        try:
-            shutil.move(self.dir_a, self.dir_b)
-        except NameError:
-            self.controller_instances(3)
-                
-    def move_2trash_command(self):
-        try:
-            send2trash.send2trash(self.dir_a)
-        except:
-            self.controller_instances(3)
+
+def main():
+    """Main program entry point"""
+    try:
+        show_banner()
+        main_menu()
+    except KeyboardInterrupt:
+        print("\n\nProgram interrupted by user. Goodbye!")
+        sys.exit(0)
+    except Exception as e:
+        print(f"\nUnexpected error: {e}")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
-    dir_a = None
-    dir_b = None
-    ext = None
-    BeginProgram = Controller(dir_a, dir_b, ext)
-    BeginProgram.command_line_options()
+    main()
