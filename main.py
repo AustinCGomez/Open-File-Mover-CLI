@@ -158,7 +158,12 @@ def main_menu():
         print("4. Exit")
         print("=" * 50)
         
-        choice = input("Enter your choice (1-4): ").strip()
+        try:
+            choice = input("Enter your choice (1-4): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            # Handle end of input or keyboard interrupt gracefully
+            print("\nExiting...")
+            return
         
         if choice == '1':
             handle_move_files()
@@ -168,7 +173,7 @@ def main_menu():
             handle_delete_permanently()
         elif choice == '4':
             print("Goodbye!")
-            sys.exit(0)
+            return  # Exit the function instead of sys.exit()
         else:
             print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
