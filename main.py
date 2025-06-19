@@ -14,8 +14,8 @@ import tkinter as tk
 def show_banner():
     """Display program banner"""
     print("=" * 60)
-    print("         PYTHON FILE MOVER CLI")
-    print("         Version 1.0.0")
+    print("         Open File Mover CLI")
+    print("         Version 1.0-Beta")
     print("=" * 60)
     print()
 
