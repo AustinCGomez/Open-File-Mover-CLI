@@ -9,6 +9,19 @@ import sys
 from pathlib import Path
 from tkinter import filedialog
 import tkinter as tk
+import ctypes
+
+
+def is_running_as_admin():
+    """Check if the script is running with administrative privileges"""
+    if os.name == 'nt':  # Windows
+        try:
+            return ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            return False
+    else:
+        # Unix/Linux/Mac
+        return os.geteuid() == 0
 
 
 def show_banner():
@@ -24,17 +37,17 @@ def get_directory(prompt_text):
     """Get directory path using file dialog"""
     root = tk.Tk()
     root.withdraw()  # Hide the main window
-    
+
     print(f"{prompt_text}")
     print("Opening file dialog...")
-    
+
     directory = filedialog.askdirectory(title=prompt_text)
     root.destroy()
-    
+
     if not directory:
         print("No directory selected. Exiting...")
         sys.exit(1)
-    
+
     print(f"Selected: {directory}")
     return directory
 
@@ -44,7 +57,7 @@ def get_extensions():
     extensions = []
     print("\nEnter file extensions to move (without dots, e.g., 'txt', 'pdf'):")
     print("Type 'done' when finished.")
-    
+
     while True:
         ext = input("Extension: ").strip().lower()
         if ext == 'done':
@@ -54,7 +67,7 @@ def get_extensions():
             print(f"Added: .{ext}")
         elif ext in extensions:
             print(f".{ext} already added")
-    
+
     return extensions
 
 
@@ -73,19 +86,19 @@ def move_files_by_extension(source_dir, dest_dir, extensions):
     """Move files with specified extensions from source to destination"""
     source_path = Path(source_dir)
     dest_path = Path(dest_dir)
-    
+
     if not source_path.exists():
         print(f"Error: Source directory '{source_dir}' does not exist")
         return False
-    
+
     if not dest_path.exists():
         print(f"Error: Destination directory '{dest_dir}' does not exist")
         return False
-    
+
     moved_count = 0
-    
+
     print(f"\nSearching for files with extensions: {', '.join(f'.{ext}' for ext in extensions)}")
-    
+
     for file_path in source_path.iterdir():
         if file_path.is_file():
             file_ext = file_path.suffix.lstrip('.').lower()
@@ -97,7 +110,7 @@ def move_files_by_extension(source_dir, dest_dir, extensions):
                     moved_count += 1
                 except Exception as e:
                     print(f"Error moving {file_path.name}: {e}")
-    
+
     print(f"\nCompleted! Moved {moved_count} files.")
     return True
 
@@ -106,18 +119,18 @@ def move_folder(source_dir, dest_dir):
     """Move entire folder from source to destination"""
     source_path = Path(source_dir)
     dest_path = Path(dest_dir)
-    
+
     if not source_path.exists():
         print(f"Error: Source directory '{source_dir}' does not exist")
         return False
-    
+
     if not dest_path.exists():
         print(f"Error: Destination directory '{dest_dir}' does not exist")
         return False
-    
+
     folder_name = source_path.name
     final_dest = dest_path / folder_name
-    
+
     try:
         shutil.move(str(source_path), str(final_dest))
         print(f"Successfully moved folder '{folder_name}' to '{dest_dir}'")
@@ -132,7 +145,7 @@ def delete_permanently(path):
     if not os.path.exists(path):
         print(f"Error: Path '{path}' does not exist")
         return False
-    
+
     try:
         if os.path.isfile(path):
             os.remove(path)
@@ -157,14 +170,13 @@ def main_menu():
         print("3. Delete permanently")
         print("4. Exit")
         print("=" * 50)
-        
+
         try:
             choice = input("Enter your choice (1-4): ").strip()
         except (EOFError, KeyboardInterrupt):
-            # Handle end of input or keyboard interrupt gracefully
             print("\nExiting...")
             return
-        
+
         if choice == '1':
             handle_move_files()
         elif choice == '2':
@@ -173,7 +185,7 @@ def main_menu():
             handle_delete_permanently()
         elif choice == '4':
             print("Goodbye!")
-            return  # Exit the function instead of sys.exit()
+            return
         else:
             print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
@@ -181,25 +193,25 @@ def main_menu():
 def handle_move_files():
     """Handle moving files by extension"""
     print("\n--- MOVE FILES BY EXTENSION ---")
-    
+
     source = get_directory("Select SOURCE directory (where files are located)")
     dest = get_directory("Select DESTINATION directory (where to move files)")
-    
+
     print(f"\nSource: {source}")
     print(f"Destination: {dest}")
-    
+
     if not confirm_action("Are these directories correct?"):
         return
-    
+
     extensions = get_extensions()
     if not extensions:
         print("No extensions specified. Returning to main menu.")
         return
-    
+
     print(f"\nWill move files with extensions: {', '.join(f'.{ext}' for ext in extensions)}")
     print(f"From: {source}")
     print(f"To: {dest}")
-    
+
     if confirm_action("Proceed with moving files?"):
         move_files_by_extension(source, dest, extensions)
 
@@ -207,13 +219,13 @@ def handle_move_files():
 def handle_move_folder():
     """Handle moving entire folder"""
     print("\n--- MOVE ENTIRE FOLDER ---")
-    
+
     source = get_directory("Select FOLDER to move")
     dest = get_directory("Select DESTINATION directory")
-    
+
     print(f"\nFolder to move: {source}")
     print(f"Destination: {dest}")
-    
+
     if confirm_action("Move this folder?"):
         move_folder(source, dest)
 
@@ -222,12 +234,12 @@ def handle_delete_permanently():
     """Handle permanently deleting items"""
     print("\n--- DELETE PERMANENTLY ---")
     print("WARNING: This will permanently delete files/folders!")
-    
+
     path = get_directory("Select file or folder to delete permanently")
-    
+
     print(f"\nWill permanently delete: {path}")
     print("This action cannot be undone!")
-    
+
     if confirm_action("Are you absolutely sure you want to delete this?"):
         if confirm_action("Final confirmation - DELETE PERMANENTLY?"):
             delete_permanently(path)
@@ -236,6 +248,12 @@ def handle_delete_permanently():
 def main():
     """Main program entry point"""
     try:
+        if not is_running_as_admin():
+            print("ERROR: This program must be run as Administrator.")
+            print("Right-click the Command Line or Powershell and choose 'Run as administrator'.")
+            print("Goodbye!")
+            sys.exit(1)
+
         show_banner()
         main_menu()
     except KeyboardInterrupt:
