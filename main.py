@@ -50,7 +50,7 @@ def show_banner():
     """Display program banner"""
     print("=" * 60)
     print("         Open File Mover CLI")
-    print("         Version 1.0-Beta")
+    print("         Version 1.0.1-Alpha")
     print("=" * 60)
     print()
 
