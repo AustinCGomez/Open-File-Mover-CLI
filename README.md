@@ -1,6 +1,7 @@
 
 # Open File Mover CLI
-#### Version 1.0.0 - Beta
+#### Version 1.0.1-Alpha
+
 
 [![Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg)](https://unlicense.org/)
 [![Python 3](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
