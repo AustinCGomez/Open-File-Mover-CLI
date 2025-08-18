@@ -18,13 +18,6 @@ Why waste time with manual file management when you can:
 Stop fighting with your file system and start conquering it. Open File Mover puts you back in control of your digital workspace!
 
 
-## Contributing
-
-Contributions are always welcome!
-
-You can suggest any function or fix any issues that you see in our project and we will consider it! Please write unit tests and ensure they pass so that we can see your functions work. We will also write additional unit tests for you.
-
-
 ## Download
 
 Getting Started is Simple!
@@ -42,38 +35,28 @@ That's it! Our intuitive command-line interface will guide you through everythin
 Zero Dependencies, Zero Hassle - We built Open File Mover using only Python's built-in libraries, so there's no need to install additional packages or worry about dependency conflicts. Just download and run!
 Ready to revolutionize your file management? Let's get moving! 🚀
 
-# Contributors
-"We want to thank every contributor who assisted this program."
-@AustinCGomez
-Maintainer of Python-File-Mover.
+# Contributing
 
-<div align="center">
-  <table style="border: none;">
-    <tr>
-      <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/7500568?v=4" width="100" height="100" alt="Contributor 1" style="border-radius: 50%;"><br>
-        <strong>Austin Gomez(AustinCGomez)</strong>
-      </td>
-<div align="center">
-    <tr>
-      <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/51723422?v=4" width="100" height="100" alt="Contributor 1" style="border-radius: 50%;"><br>
-        <strong>Sorena(sorena-dev)</strong>
-      </td>
-      <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/37051110?v=4" width="100" height="100" alt="Contributor 2" style="border-radius: 50%;"><br>
-        <strong>Mudassir Chapra(muddi900)</strong>
-      </td>
-      <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/90431210?v=4" width="100" height="100" alt="Contributor 3" style="border-radius: 50%;"><br>
-        <strong>Austin Burdette(burd5)</strong>
-      </td>
-     <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/66977282?v=4" width="100" height="100" alt="Contributor 3" style="border-radius: 50%;"><br>
-        <strong>malikrohail(malikrohail)</strong>
-      </td>
-  </table>
-</div>
+The current maintainer of Open File Mover CLI is @AustinCGomez, and if you wish to assist in the development of this project than he is happy to accept your contributions! 
+
+Step 1: Pick an issue that is available in our issues tab. 
+Step 2: Announce that you wish to take the task and wait for the maintainer to confirm that it is available.
+Step 3: Create a pull-request and patiently wait for the @maintainer to review it. 
+Step 4: Wait for the maintainer to test your code. He will test your code thoroughly and then either approve the code into the code-base or send back recommendations for refactoring.
+Step 5: Enjoy the thrill of contributing to a open source project and your name in the list shown below!
+
+
+
+I want to extend thanks to all contributors to this project from our earliest iterations to our newest versions. Thanks for making open source software such a fun and thrilling hobby!
+
+@AustinCGomez
+@burd5
+@sorena-dev
+@muddi900
+@malikrohail
+
+
+
 
 
 
