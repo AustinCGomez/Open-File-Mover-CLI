@@ -28,16 +28,14 @@ import shutil
 import argparse
 import sys
 from pathlib import Path
-from tkinter import filedialog
-import tkinter as tk
 import winshell
 import ctypes
 
 def cli_commands():
     parser = argparse.ArgumentParser(description="These are the current commands for the program to function.")
-    parser.add_argument("--move-folder", nargs=2, metavar=("SRC","DEST"), help="Move a folder from Source to Destination")
-    parser.add_argument("--empty-recycle", action="store_true",help="This command will empty the recycle bin on Windows systems.")
-    parser.add_argument("--empty-downloads", action="store_true", help="This command will empty the download folders on Windows systems.")
+    parser.add_argument("-mf", "--move-folder", nargs=2, metavar=("SRC","DEST"), help="Move a folder from Source to Destination")
+    parser.add_argument("-er", "--empty-recycle", action="store_true",help="This command will empty the recycle bin on Windows systems.")
+    parser.add_argument("-ed","--empty-downloads", action="store_true", help="This command will empty the download folders on Windows systems.")
     return parser
 
 #This function will log activity to a .txt file for the user to review anytime that they want or need.
@@ -47,10 +45,11 @@ def activity_logger():
 
 
 def show_banner():
+
     """Display program banner"""
     print("=" * 60)
     print("         Open File Mover CLI")
-    print("         Version 1.0.1-Alpha")
+    print("         Version 1.0.1-Beta-Prerelease")
     print("=" * 60)
     print()
 
@@ -87,7 +86,11 @@ def move_folder(source_dir, dest_dir):
         return False
 
 def empty_recycle():
-    winshell.recycle_bin().empty(confirm=False, show_progress=True, sound=True)
+    try:
+        winshell.recycle_bin().empty(confirm=False, show_progress=True, sound=True)
+        print("Success!")
+    except:
+        print("Your recycle bin is already empty.")
 
 def empty_downloads():
     downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
@@ -132,9 +135,13 @@ def main():
                 empty_recycle()
             if args.empty_downloads:
                 empty_downloads()
+            if not any(vars(args).values()):
+                parser.print_help()
+                exit()
 
         else:
-            print("Please run the program as an administrator.")
+            print("ERROR: Oops! This project needs superpowers to run. Please launch it as an administrator to unlock its full potential!")
+            print("EXITING!")
 
     except TypeError:
         print("Please run --help or read the documentation on our github for troubleshooting.")
