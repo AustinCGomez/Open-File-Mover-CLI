@@ -23,7 +23,7 @@ We warmly welcome contributions to the **Open File Mover CLI** project! The curr
 
 ### How to Contribute
 
-1. **Find an Issue**: Visit the [Issues tab](https://github.com/your-repo/open-file-mover-cli/issues) to find a task that interests you.
+1. **Find an Issue**: Visit the [Issues tab](https://github.com/AustinCGomez/open-file-mover-cli/issues) to find a task that interests you.
 2. **Claim the Task**: Comment on the issue to express your interest in working on it. Wait for confirmation from the maintainer (@AustinCGomez) to ensure the task is available.
 3. **Submit a Pull Request**: Create a pull request (PR) with your changes. Ensure your code is well-documented and adheres to the project's guidelines.
 4. **Code Review**: The maintainer will review and test your code thoroughly. You may receive feedback or suggestions for refactoring.
