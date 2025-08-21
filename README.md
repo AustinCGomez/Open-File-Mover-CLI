@@ -1,8 +1,8 @@
 # Open File Mover CLI
-#### V1.0.1-Beta-Prerelease
+#### V1.0.1-Beta
 
 [![Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg)](https://unlicense.org/)
-[![Python 3](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
+
 
 🎯 Say goodbye to repetitive drag-and-drop drudgery!
 
