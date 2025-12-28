@@ -3,7 +3,6 @@
 
 [![Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg)](https://unlicense.org/)
 
-
 🎯 Say goodbye to repetitive drag-and-drop drudgery!
 
 Open File Mover is a simple Python script that lets you do three things:
@@ -25,15 +24,11 @@ We warmly welcome contributions to the **Open File Mover CLI** project! The curr
 
 As of December 28th 2025, Open File Mover CLI has been sunsetted and officially archived as a public archive on Github. You are welcome to fork the project and continue in whatever way you wish. 
 
-## Acknowledgments
+## Contributors
+Thank you to each contributor to this project from the first iteration two years ago to the last version prior to the project being sunset on December 28th 2025. 
 
-A huge thank you to all our contributors who have made **Open File Mover CLI** better with every commit. From early iterations to the latest versions, your efforts make open-source development fun and rewarding!
-
-**Contributors**:
-- @AustinCGomez
-- @burd5
-- @sorena-dev
-- @muddi900
-- @malikrohail
-
-Join us in making **Open File Mover CLI** even better! 🚀
+@AustinCGomez
+@burd5
+@sorena-dev
+@muddi900
+@malikrohail
